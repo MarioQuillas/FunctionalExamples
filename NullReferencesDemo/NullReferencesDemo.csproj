@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5847E2B-7767-4E99-9464-3A88C2AF80FC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>NullReferencesDemo</RootNamespace>
+    <AssemblyName>NullReferencesDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\Implementation\ApplicationServices.cs" />
+    <Compile Include="Application\Interfaces\IDomainServices.cs" />
+    <Compile Include="Common\IEnumerableExtensions.cs" />
+    <Compile Include="Common\Option.cs" />
+    <Compile Include="Common\ServiceLocator.cs" />
+    <Compile Include="Domain\Implementation\AccountBase.cs" />
+    <Compile Include="Domain\Implementation\CreditAccount.cs" />
+    <Compile Include="Domain\Implementation\DebitAccount.cs" />
+    <Compile Include="Domain\Implementation\DomainServices.cs" />
+    <Compile Include="Domain\Implementation\User.cs" />
+    <Compile Include="Domain\Interfaces\IAccount.cs" />
+    <Compile Include="Domain\Interfaces\IProduct.cs" />
+    <Compile Include="Domain\Interfaces\IProductRepository.cs" />
+    <Compile Include="Domain\Interfaces\ITransactionSelector.cs" />
+    <Compile Include="Domain\Interfaces\IUser.cs" />
+    <Compile Include="Domain\Interfaces\IUserRepository.cs" />
+    <Compile Include="Domain\Interfaces\MoneyTransaction.cs" />
+    <Compile Include="Infrastructure\Implementation\ProductData.cs" />
+    <Compile Include="Infrastructure\Implementation\ProductRepository.cs" />
+    <Compile Include="Infrastructure\Implementation\UserRepository.cs" />
+    <Compile Include="Presentation\Implementation\CommandResults\DepositResult.cs" />
+    <Compile Include="Presentation\Implementation\CommandResults\LoginFailed.cs" />
+    <Compile Include="Presentation\Implementation\CommandResults\NoResult.cs" />
+    <Compile Include="Presentation\Implementation\CommandResults\PurchaseResult.cs" />
+    <Compile Include="Presentation\Implementation\CommandResults\UserLoggedIn.cs" />
+    <Compile Include="Presentation\Implementation\CommandResults\UserLoggedOut.cs" />
+    <Compile Include="Presentation\Implementation\CommandResults\UserRegistered.cs" />
+    <Compile Include="Presentation\Implementation\Commands\DepositCommand.cs" />
+    <Compile Include="Presentation\Implementation\Commands\DoNothingCommand.cs" />
+    <Compile Include="Presentation\Implementation\Commands\LoginCommand.cs" />
+    <Compile Include="Presentation\Implementation\Commands\LogoutCommand.cs" />
+    <Compile Include="Presentation\Implementation\Commands\PurchaseCommand.cs" />
+    <Compile Include="Presentation\Implementation\Commands\RegisterCommand.cs" />
+    <Compile Include="Presentation\Implementation\MenuItem.cs" />
+    <Compile Include="Presentation\Implementation\UserInterface.cs" />
+    <Compile Include="Presentation\Implementation\ViewLocator.cs" />
+    <Compile Include="Presentation\Interfaces\IApplicationServices.cs" />
+    <Compile Include="Presentation\Interfaces\ICommand.cs" />
+    <Compile Include="Presentation\Interfaces\ICommandResult.cs" />
+    <Compile Include="Presentation\Interfaces\IPurchaseReport.cs" />
+    <Compile Include="Presentation\Interfaces\IPurchaseReportFactory.cs" />
+    <Compile Include="Presentation\Interfaces\IUserInterface.cs" />
+    <Compile Include="Presentation\Interfaces\IView.cs" />
+    <Compile Include="Presentation\Interfaces\StockItem.cs" />
+    <Compile Include="Presentation\PurchaseReports\FailedPurchase.cs" />
+    <Compile Include="Presentation\PurchaseReports\NotEnoughMoney.cs" />
+    <Compile Include="Presentation\PurchaseReports\NotRegistered.cs" />
+    <Compile Include="Presentation\PurchaseReports\NotSignedIn.cs" />
+    <Compile Include="Presentation\PurchaseReports\ProductNotFound.cs" />
+    <Compile Include="Presentation\PurchaseReports\PurchaseReportFactory.cs" />
+    <Compile Include="Presentation\PurchaseReports\Receipt.cs" />
+    <Compile Include="Presentation\Views\DepositView.cs" />
+    <Compile Include="Presentation\Views\EmptyView.cs" />
+    <Compile Include="Presentation\Views\FailedPurchaseView.cs" />
+    <Compile Include="Presentation\Views\LoginFailedView.cs" />
+    <Compile Include="Presentation\Views\NotEnoughMoneyView.cs" />
+    <Compile Include="Presentation\Views\NotRegisteredView.cs" />
+    <Compile Include="Presentation\Views\NotSignedInView.cs" />
+    <Compile Include="Presentation\Views\ProductNotFoundView.cs" />
+    <Compile Include="Presentation\Views\ReceiptView.cs" />
+    <Compile Include="Presentation\Views\UserLoggedInView.cs" />
+    <Compile Include="Presentation\Views\UserLoggedOutView.cs" />
+    <Compile Include="Presentation\Views\UserRegisteredView.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
