@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26206.0
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalCSharp", "FunctionalCSharp\FunctionalCSharp.csproj", "{930A00C5-764F-4ACC-9E11-A535BA13134A}"
 EndProject
@@ -12,9 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullReferencesDemo", "NullReferencesDemo\NullReferencesDemo.csproj", "{E5847E2B-7767-4E99-9464-3A88C2AF80FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DddInPractice", "DddInPractice", "{79E9AB81-84E3-4817-A7A7-2B3F572C08BF}"
-	ProjectSection(SolutionItems) = preProject
-		DddInPractice.Logic\DBCreationScript.txt = DddInPractice.Logic\DBCreationScript.txt
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControlFlow", "ControlFlow", "{77B4FD98-FFC5-44C4-A640-C63B14E58679}"
 EndProject
