@@ -1,17 +1,17 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.PurchaseReports
+﻿namespace NullReferencesDemo.Presentation.PurchaseReports
 {
-    public class ProductNotFound: IPurchaseReport
+    using NullReferencesDemo.Presentation.Interfaces;
+
+    public class ProductNotFound : IPurchaseReport
     {
-
-        public string Username { get; }
-        public string ProductName { get; }
-
         public ProductNotFound(string username, string productName)
         {
             this.Username = username;
             this.ProductName = productName;
         }
+
+        public string ProductName { get; }
+
+        public string Username { get; }
     }
 }

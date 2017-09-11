@@ -1,22 +1,24 @@
-using FluentNHibernate.Mapping;
-
 namespace DddInPractice.Logic.SnackMachines
 {
+    using FluentNHibernate.Mapping;
+
     public class SlotMap : ClassMap<Slot>
     {
         public SlotMap()
         {
-            Id(x => x.Id);
-            Map(x => x.Position);
+            this.Id(x => x.Id);
+            this.Map(x => x.Position);
 
-            Component(x => x.SnackPile, y =>
-            {
-                y.Map(x => x.Quantity);
-                y.Map(x => x.Price);
-                y.References(x => x.Snack).Not.LazyLoad();
-            });
+            this.Component(
+                x => x.SnackPile,
+                y =>
+                    {
+                        y.Map(x => x.Quantity);
+                        y.Map(x => x.Price);
+                        y.References(x => x.Snack).Not.LazyLoad();
+                    });
 
-            References(x => x.SnackMachine);
+            this.References(x => x.SnackMachine);
         }
     }
 }

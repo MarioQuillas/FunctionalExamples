@@ -1,63 +1,72 @@
-﻿using DddInPractice.Logic.Atms;
-using DddInPractice.Logic.Management;
-using DddInPractice.Logic.SharedKernel;
-using DddInPractice.UI.Common;
-
-namespace DddInPractice.UI.Atms
+﻿namespace DddInPractice.UI.Atms
 {
+    using DddInPractice.Logic.Atms;
+    using DddInPractice.Logic.SharedKernel;
+    using DddInPractice.UI.Common;
+
     public class AtmViewModel : ViewModel
     {
-        private readonly PaymentGateway _paymentGateway;
-        private readonly AtmRepository _repository;
         private readonly Atm _atm;
 
-        private string _message;
-        public string Message
-        {
-            get { return _message; }
-            private set
-            {
-                _message = value;
-                Notify();
-            }
-        }
+        private readonly PaymentGateway _paymentGateway;
 
-        public override string Caption => "ATM";
-        public Money MoneyInside => _atm.MoneyInside;
-        public string MoneyCharged => _atm.MoneyCharged.ToString("C2");
-        public Command<decimal> TakeMoneyCommand { get; private set; }
+        private readonly AtmRepository _repository;
+
+        private string _message;
 
         public AtmViewModel(Atm atm)
         {
-            _atm = atm;
-            _repository = new AtmRepository();
-            _paymentGateway = new PaymentGateway();
+            this._atm = atm;
+            this._repository = new AtmRepository();
+            this._paymentGateway = new PaymentGateway();
 
-            TakeMoneyCommand = new Command<decimal>(x => x > 0, TakeMoney);
+            this.TakeMoneyCommand = new Command<decimal>(x => x > 0, this.TakeMoney);
+        }
+
+        public override string Caption => "ATM";
+
+        public string Message
+        {
+            get
+            {
+                return this._message;
+            }
+
+            private set
+            {
+                this._message = value;
+                this.Notify();
+            }
+        }
+
+        public string MoneyCharged => this._atm.MoneyCharged.ToString("C2");
+
+        public Money MoneyInside => this._atm.MoneyInside;
+
+        public Command<decimal> TakeMoneyCommand { get; private set; }
+
+        private void NotifyClient(string message)
+        {
+            this.Message = message;
+            this.Notify(nameof(this.MoneyInside));
+            this.Notify(nameof(this.MoneyCharged));
         }
 
         private void TakeMoney(decimal amount)
         {
-            string error = _atm.CanTakeMoney(amount);
+            string error = this._atm.CanTakeMoney(amount);
             if (error != string.Empty)
             {
-                NotifyClient(error);
+                this.NotifyClient(error);
                 return;
             }
 
-            decimal amountWithCommission = _atm.CaluculateAmountWithCommission(amount);
-            _paymentGateway.ChargePayment(amountWithCommission);
-            _atm.TakeMoney(amount);
-            _repository.Save(_atm);
+            decimal amountWithCommission = this._atm.CaluculateAmountWithCommission(amount);
+            this._paymentGateway.ChargePayment(amountWithCommission);
+            this._atm.TakeMoney(amount);
+            this._repository.Save(this._atm);
 
-            NotifyClient("You have taken " + amount.ToString("C2"));
-        }
-
-        private void NotifyClient(string message)
-        {
-            Message = message;
-            Notify(nameof(MoneyInside));
-            Notify(nameof(MoneyCharged));
+            this.NotifyClient("You have taken " + amount.ToString("C2"));
         }
     }
 }

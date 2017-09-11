@@ -2,7 +2,8 @@
 {
     public interface IUserInterface
     {
-        bool ReadCommand();
         void ExecuteCommand();
+
+        bool ReadCommand();
     }
 }

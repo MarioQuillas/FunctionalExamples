@@ -1,19 +1,20 @@
-﻿using System;
-using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.Implementation.CommandResults
+﻿namespace NullReferencesDemo.Presentation.Implementation.CommandResults
 {
-    public class DepositResult: ICommandResult
-    {
-        public string Username { get; }
-        public decimal Amount { get; }
-        public decimal Balance { get; }
+    using NullReferencesDemo.Presentation.Interfaces;
 
+    public class DepositResult : ICommandResult
+    {
         public DepositResult(string username, decimal amount, decimal balance)
         {
             this.Username = username ?? string.Empty;
             this.Amount = amount;
             this.Balance = balance;
         }
+
+        public decimal Amount { get; }
+
+        public decimal Balance { get; }
+
+        public string Username { get; }
     }
 }

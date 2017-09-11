@@ -1,14 +1,14 @@
-﻿using DddInPractice.UI.Management;
-
-namespace DddInPractice.UI.Common
+﻿namespace DddInPractice.UI.Common
 {
+    using DddInPractice.UI.Management;
+
     public class MainViewModel : ViewModel
     {
-        public DashboardViewModel Dashboard { get; private set; }
-
         public MainViewModel()
         {
-            Dashboard = new DashboardViewModel();
+            this.Dashboard = new DashboardViewModel();
         }
+
+        public DashboardViewModel Dashboard { get; private set; }
     }
 }

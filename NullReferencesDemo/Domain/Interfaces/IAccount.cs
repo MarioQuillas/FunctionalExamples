@@ -1,11 +1,13 @@
-﻿using NullReferencesDemo.Common;
-
-namespace NullReferencesDemo.Domain.Interfaces
+﻿namespace NullReferencesDemo.Domain.Interfaces
 {
+    using NullReferencesDemo.Common;
+
     public interface IAccount
     {
-        MoneyTransaction Deposit(decimal amount);
-        Option<MoneyTransaction> TryWithdraw(decimal amount);
         decimal Balance { get; }
+
+        MoneyTransaction Deposit(decimal amount);
+
+        Option<MoneyTransaction> TryWithdraw(decimal amount);
     }
 }

@@ -11,6 +11,6 @@
             <common:MainDataTemplateSelector x:Key="selector" />
         </Grid.Resources>
 
-        <ContentPresenter ContentTemplateSelector="{StaticResource selector}" Content="{Binding}"></ContentPresenter>
+        <ContentPresenter ContentTemplateSelector="{StaticResource selector}" Content="{Binding}" />
     </Grid>
 </Window>

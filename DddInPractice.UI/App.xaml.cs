@@ -1,7 +1,7 @@
-﻿using DddInPractice.Logic.Utils;
-
-namespace DddInPractice.UI
+﻿namespace DddInPractice.UI
 {
+    using DddInPractice.Logic.Utils;
+
     public partial class App
     {
         public App()

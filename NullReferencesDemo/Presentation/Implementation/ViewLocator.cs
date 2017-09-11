@@ -1,9 +1,9 @@
-﻿using NullReferencesDemo.Common;
-using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.Implementation
+﻿namespace NullReferencesDemo.Presentation.Implementation
 {
-    public class ViewLocator: ServiceLocator<ICommandResult, IView>
+    using NullReferencesDemo.Common;
+    using NullReferencesDemo.Presentation.Interfaces;
+
+    public class ViewLocator : ServiceLocator<ICommandResult, IView>
     {
     }
 }

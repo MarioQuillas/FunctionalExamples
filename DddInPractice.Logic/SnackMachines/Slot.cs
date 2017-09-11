@@ -1,23 +1,25 @@
-﻿using DddInPractice.Logic.Common;
-
-namespace DddInPractice.Logic.SnackMachines
+﻿namespace DddInPractice.Logic.SnackMachines
 {
+    using DddInPractice.Logic.Common;
+
     public class Slot : Entity
     {
-        public virtual SnackPile SnackPile { get; set; }
-        public virtual SnackMachine SnackMachine { get; }
-        public virtual int Position { get; }
+        public Slot(SnackMachine snackMachine, int position)
+            : this()
+        {
+            this.SnackMachine = snackMachine;
+            this.Position = position;
+            this.SnackPile = SnackPile.Empty;
+        }
 
         protected Slot()
         {
         }
 
-        public Slot(SnackMachine snackMachine, int position)
-            : this()
-        {
-            SnackMachine = snackMachine;
-            Position = position;
-            SnackPile = SnackPile.Empty;
-        }
+        public virtual int Position { get; }
+
+        public virtual SnackMachine SnackMachine { get; }
+
+        public virtual SnackPile SnackPile { get; set; }
     }
 }

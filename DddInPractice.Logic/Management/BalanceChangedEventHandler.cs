@@ -1,8 +1,8 @@
-﻿using DddInPractice.Logic.Atms;
-using DddInPractice.Logic.Common;
-
-namespace DddInPractice.Logic.Management
+﻿namespace DddInPractice.Logic.Management
 {
+    using DddInPractice.Logic.Atms;
+    using DddInPractice.Logic.Common;
+
     public class BalanceChangedEventHandler : IHandler<BalanceChangedEvent>
     {
         public void Handle(BalanceChangedEvent domainEvent)

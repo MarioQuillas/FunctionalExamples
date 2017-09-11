@@ -1,13 +1,13 @@
-﻿using FluentNHibernate.Mapping;
-
-namespace DddInPractice.Logic.SnackMachines
+﻿namespace DddInPractice.Logic.SnackMachines
 {
+    using FluentNHibernate.Mapping;
+
     public class SnackMap : ClassMap<Snack>
     {
         public SnackMap()
         {
-            Id(x => x.Id);
-            Map(x => x.Name);
+            this.Id(x => x.Id);
+            this.Map(x => x.Name);
         }
     }
 }

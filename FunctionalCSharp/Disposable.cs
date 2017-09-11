@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace FunctionalCSharp
+﻿namespace FunctionalCSharp
 {
+    using System;
+
     public static class Disposable
     {
-        public static TResult Using<TDisposable, TResult>
-        (
-            Func<TDisposable> factory,
-            Func<TDisposable, TResult> fn)
+        public static TResult Using<TDisposable, TResult>(Func<TDisposable> factory, Func<TDisposable, TResult> fn)
             where TDisposable : IDisposable
         {
             using (var disposable = factory())

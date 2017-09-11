@@ -1,14 +1,14 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.Implementation.CommandResults
+﻿namespace NullReferencesDemo.Presentation.Implementation.CommandResults
 {
-    public class LoginFailed: ICommandResult
-    {
-        public string Username { get; }
+    using NullReferencesDemo.Presentation.Interfaces;
 
+    public class LoginFailed : ICommandResult
+    {
         public LoginFailed(string username)
         {
             this.Username = username ?? string.Empty;
         }
+
+        public string Username { get; }
     }
 }

@@ -1,16 +1,17 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.Implementation.CommandResults
+﻿namespace NullReferencesDemo.Presentation.Implementation.CommandResults
 {
-    public class UserLoggedIn: ICommandResult
-    {
-        public string Username { get; }
-        public decimal Balance { get; }
+    using NullReferencesDemo.Presentation.Interfaces;
 
+    public class UserLoggedIn : ICommandResult
+    {
         public UserLoggedIn(string username, decimal balance)
         {
             this.Username = username ?? string.Empty;
             this.Balance = balance;
         }
+
+        public decimal Balance { get; }
+
+        public string Username { get; }
     }
 }

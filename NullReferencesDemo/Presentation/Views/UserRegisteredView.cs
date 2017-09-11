@@ -1,23 +1,20 @@
-﻿using System;
-using NullReferencesDemo.Presentation.Implementation.CommandResults;
-using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.Views
+﻿namespace NullReferencesDemo.Presentation.Views
 {
-    public class UserRegisteredView: IView
+    using System;
+
+    using NullReferencesDemo.Presentation.Implementation.CommandResults;
+    using NullReferencesDemo.Presentation.Interfaces;
+
+    public class UserRegisteredView : IView
     {
-
-        private UserRegistered Data { get; }
-
         public UserRegisteredView(UserRegistered data)
         {
-
-            if (data == null)
-                throw new ArgumentNullException(nameof(data));
+            if (data == null) throw new ArgumentNullException(nameof(data));
 
             this.Data = data;
-
         }
+
+        private UserRegistered Data { get; }
 
         public void Render()
         {

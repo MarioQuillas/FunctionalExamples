@@ -1,11 +1,11 @@
-﻿using NullReferencesDemo.Common;
-using System.Collections.Generic;
-
-namespace NullReferencesDemo.Domain.Interfaces
+﻿namespace NullReferencesDemo.Domain.Interfaces
 {
+    using System.Collections.Generic;
+
+    using NullReferencesDemo.Common;
+
     public interface ITransactionSelector
     {
-        Option<MoneyTransaction> TrySelectOne(IEnumerable<MoneyTransaction> transactions,
-                                              decimal maxAmount);
+        Option<MoneyTransaction> TrySelectOne(IEnumerable<MoneyTransaction> transactions, decimal maxAmount);
     }
 }

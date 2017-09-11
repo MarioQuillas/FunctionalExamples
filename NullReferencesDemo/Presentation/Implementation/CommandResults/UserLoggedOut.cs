@@ -1,14 +1,14 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.Implementation.CommandResults
+﻿namespace NullReferencesDemo.Presentation.Implementation.CommandResults
 {
-    public class UserLoggedOut: ICommandResult
-    {
-        public string Username { get; }
+    using NullReferencesDemo.Presentation.Interfaces;
 
+    public class UserLoggedOut : ICommandResult
+    {
         public UserLoggedOut(string username)
         {
             this.Username = username ?? string.Empty;
         }
+
+        public string Username { get; }
     }
 }

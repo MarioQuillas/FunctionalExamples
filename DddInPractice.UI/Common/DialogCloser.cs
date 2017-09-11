@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace DddInPractice.UI.Common
+﻿namespace DddInPractice.UI.Common
 {
+    using System.Windows;
+
     public static class DialogCloser
     {
         public static readonly DependencyProperty DialogResultProperty = DependencyProperty.RegisterAttached(
@@ -10,12 +10,10 @@ namespace DddInPractice.UI.Common
             typeof(DialogCloser),
             new PropertyMetadata(DialogResultChanged));
 
-
         public static void SetDialogResult(Window target, bool? value)
         {
             target.SetValue(DialogResultProperty, value);
         }
-
 
         private static void DialogResultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

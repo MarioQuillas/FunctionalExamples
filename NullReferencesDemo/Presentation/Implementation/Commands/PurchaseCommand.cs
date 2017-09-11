@@ -1,12 +1,12 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-using System;
-using NullReferencesDemo.Presentation.Implementation.CommandResults;
-
-namespace NullReferencesDemo.Presentation.Implementation.Commands
+﻿namespace NullReferencesDemo.Presentation.Implementation.Commands
 {
-    internal class PurchaseCommand: ICommand
-    {
+    using System;
 
+    using NullReferencesDemo.Presentation.Implementation.CommandResults;
+    using NullReferencesDemo.Presentation.Interfaces;
+
+    internal class PurchaseCommand : ICommand
+    {
         private readonly IApplicationServices appServices;
 
         public PurchaseCommand(IApplicationServices appServices)
@@ -16,7 +16,6 @@ namespace NullReferencesDemo.Presentation.Implementation.Commands
 
         public ICommandResult Execute()
         {
-
             this.ShowStock();
 
             Console.Write("Enter item name: ");
@@ -25,7 +24,6 @@ namespace NullReferencesDemo.Presentation.Implementation.Commands
             IPurchaseReport report = this.appServices.Purchase(itemName);
 
             return new PurchaseResult(report);
-
         }
 
         private void ShowStock()

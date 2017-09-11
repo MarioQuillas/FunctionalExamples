@@ -1,18 +1,20 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.PurchaseReports
+﻿namespace NullReferencesDemo.Presentation.PurchaseReports
 {
-    public class Receipt: IPurchaseReport
-    {
-        public string Username { get; }
-        public string ProductName { get; }
-        public decimal Price { get; }
+    using NullReferencesDemo.Presentation.Interfaces;
 
+    public class Receipt : IPurchaseReport
+    {
         public Receipt(string username, string productName, decimal price)
         {
             this.Username = username;
             this.ProductName = productName;
             this.Price = price;
         }
+
+        public decimal Price { get; }
+
+        public string ProductName { get; }
+
+        public string Username { get; }
     }
 }

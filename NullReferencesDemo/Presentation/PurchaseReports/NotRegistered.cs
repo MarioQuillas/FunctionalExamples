@@ -1,15 +1,14 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.PurchaseReports
+﻿namespace NullReferencesDemo.Presentation.PurchaseReports
 {
-    public class NotRegistered: IPurchaseReport
+    using NullReferencesDemo.Presentation.Interfaces;
+
+    public class NotRegistered : IPurchaseReport
     {
-
-        public string Username { get; }
-
         public NotRegistered(string username)
         {
             this.Username = username;
         }
+
+        public string Username { get; }
     }
 }

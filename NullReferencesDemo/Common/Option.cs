@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NullReferencesDemo.Common
+﻿namespace NullReferencesDemo.Common
 {
-    public class Option<T>: IEnumerable<T>
+    using System.Collections;
+    using System.Collections.Generic;
+
+    public class Option<T> : IEnumerable<T>
     {
         private T[] data;
-        
+
         private Option(T[] data)
         {
             this.data = data;
@@ -14,7 +14,7 @@ namespace NullReferencesDemo.Common
 
         public static Option<T> Create(T element)
         {
-            return new Option<T>(new T[] { element });
+            return new Option<T>(new[] { element });
         }
 
         public static Option<T> CreateEmpty()
@@ -27,7 +27,7 @@ namespace NullReferencesDemo.Common
             return ((IEnumerable<T>)this.data).GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }

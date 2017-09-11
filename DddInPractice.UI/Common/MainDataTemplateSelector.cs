@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace DddInPractice.UI.Common
+﻿namespace DddInPractice.UI.Common
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+
     public class MainDataTemplateSelector : DataTemplateSelector
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)

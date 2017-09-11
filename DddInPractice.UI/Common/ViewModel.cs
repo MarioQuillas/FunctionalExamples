@@ -1,30 +1,37 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using DddInPractice.UI.Utils;
-
-namespace DddInPractice.UI.Common
+﻿namespace DddInPractice.UI.Common
 {
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+
+    using DddInPractice.UI.Utils;
+
     public abstract class ViewModel : INotifyPropertyChanged
     {
         protected static readonly DialogService _dialogService = new DialogService();
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private bool? _dialogResult;
-        public bool? DialogResult
-        {
-            get { return _dialogResult; }
-            protected set
-            {
-                _dialogResult = value;
-                Notify();
-            }
-        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public virtual string Caption => string.Empty;
 
+        public bool? DialogResult
+        {
+            get
+            {
+                return this._dialogResult;
+            }
+
+            protected set
+            {
+                this._dialogResult = value;
+                this.Notify();
+            }
+        }
+
         protected void Notify([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

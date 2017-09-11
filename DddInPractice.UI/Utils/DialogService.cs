@@ -1,7 +1,7 @@
-﻿using DddInPractice.UI.Common;
-
-namespace DddInPractice.UI.Utils
+﻿namespace DddInPractice.UI.Utils
 {
+    using DddInPractice.UI.Common;
+
     public class DialogService
     {
         public bool? ShowDialog(ViewModel viewModel)

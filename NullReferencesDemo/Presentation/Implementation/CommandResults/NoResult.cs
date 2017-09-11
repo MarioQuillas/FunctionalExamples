@@ -1,8 +1,8 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.Implementation.CommandResults
+﻿namespace NullReferencesDemo.Presentation.Implementation.CommandResults
 {
-    public class NoResult: ICommandResult
+    using NullReferencesDemo.Presentation.Interfaces;
+
+    public class NoResult : ICommandResult
     {
     }
 }

@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NullReferencesDemo.Common;
-using NullReferencesDemo.Domain.Interfaces;
-
-namespace NullReferencesDemo.Domain.Implementation
+﻿namespace NullReferencesDemo.Domain.Implementation
 {
-    public class CreditAccount: AccountBase
-    {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
+    using NullReferencesDemo.Common;
+    using NullReferencesDemo.Domain.Interfaces;
+
+    public class CreditAccount : AccountBase
+    {
         private readonly IList<MoneyTransaction> pendingTransactions = new List<MoneyTransaction>();
+
         private readonly ITransactionSelector pendingTransactionSelectionStrategy;
 
         public CreditAccount(ITransactionSelector transactionSelectionStrategy)
@@ -18,7 +19,6 @@ namespace NullReferencesDemo.Domain.Implementation
                 throw new ArgumentNullException(nameof(transactionSelectionStrategy));
 
             this.pendingTransactionSelectionStrategy = transactionSelectionStrategy;
-
         }
 
         public override decimal Balance
@@ -29,11 +29,21 @@ namespace NullReferencesDemo.Domain.Implementation
             }
         }
 
+        public override MoneyTransaction Deposit(decimal amount)
+        {
+            if (amount <= 0) throw new ArgumentException("Amount to deposit must be positive.");
+
+            MoneyTransaction transaction = new MoneyTransaction(amount);
+            this.RegisterTransaction(transaction);
+
+            this.ProcessPendingWithdrawals();
+
+            return transaction;
+        }
+
         public override Option<MoneyTransaction> TryWithdraw(decimal amount)
         {
-
-            if (amount <= 0)
-                throw new ArgumentException("Amount to withdraw must be positive.", nameof(amount));
+            if (amount <= 0) throw new ArgumentException("Amount to withdraw must be positive.", nameof(amount));
 
             MoneyTransaction transaction = new MoneyTransaction(-amount);
 
@@ -41,56 +51,33 @@ namespace NullReferencesDemo.Domain.Implementation
             this.ProcessPendingWithdrawals();
 
             return Option<MoneyTransaction>.Create(transaction);
-
         }
 
-        public override MoneyTransaction Deposit(decimal amount)
+        private void ProcessPendingWithdrawal(Option<MoneyTransaction> option)
         {
+            if (!option.Any()) return;
 
-            if (amount <= 0)
-                throw new ArgumentException("Amount to deposit must be positive.");
+            MoneyTransaction transaction = option.Single();
 
-            MoneyTransaction transaction = new MoneyTransaction(amount);
-            base.RegisterTransaction(transaction);
-
-            this.ProcessPendingWithdrawals();
-            
-            return transaction;
-
+            this.RegisterTransaction(transaction);
+            this.pendingTransactions.Remove(transaction);
         }
 
         private void ProcessPendingWithdrawals()
         {
-
             Option<MoneyTransaction> option = Option<MoneyTransaction>.CreateEmpty();
 
             do
             {
                 option = this.TrySelectPendingTransaction();
-                ProcessPendingWithdrawal(option);
+                this.ProcessPendingWithdrawal(option);
             }
             while (option.Any());
-
         }
 
         private Option<MoneyTransaction> TrySelectPendingTransaction()
         {
-            return
-                this.pendingTransactionSelectionStrategy
-                    .TrySelectOne(this.pendingTransactions, base.Balance);
-        }
-
-        private void ProcessPendingWithdrawal(Option<MoneyTransaction> option)
-        {
-
-            if (!option.Any())
-                return;
-
-            MoneyTransaction transaction = option.Single();
-
-            base.RegisterTransaction(transaction);
-            this.pendingTransactions.Remove(transaction);
-
+            return this.pendingTransactionSelectionStrategy.TrySelectOne(this.pendingTransactions, base.Balance);
         }
     }
 }

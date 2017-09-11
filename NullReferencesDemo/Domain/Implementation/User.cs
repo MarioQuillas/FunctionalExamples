@@ -1,14 +1,15 @@
-﻿using System.Linq;
-using NullReferencesDemo.Domain.Interfaces;
-using NullReferencesDemo.Presentation.Interfaces;
-using NullReferencesDemo.Presentation.PurchaseReports;
-
-namespace NullReferencesDemo.Domain.Implementation
+﻿namespace NullReferencesDemo.Domain.Implementation
 {
-    internal class User: IUser
+    using System.Linq;
+
+    using NullReferencesDemo.Domain.Interfaces;
+    using NullReferencesDemo.Presentation.Interfaces;
+    using NullReferencesDemo.Presentation.PurchaseReports;
+
+    internal class User : IUser
     {
-        public string Username { get; private set; }
         private readonly IAccount account;
+
         private readonly IPurchaseReportFactory reportFactory;
 
         public User(string username, IAccount account, IPurchaseReportFactory reportFactory)
@@ -18,33 +19,25 @@ namespace NullReferencesDemo.Domain.Implementation
             this.reportFactory = reportFactory;
         }
 
+        public decimal Balance => this.account.Balance;
+
+        public string Username { get; private set; }
+
         public void Deposit(decimal amount)
         {
             this.account.Deposit(amount);
         }
 
-        public decimal Balance
-        {
-            get
-            {
-                return this.account.Balance;
-            }
-        }
-
         public IPurchaseReport Purchase(IProduct product)
         {
-            return
-                this.account.TryWithdraw(product.Price)
-                    .Select(trans => new Receipt(this.Username, product.Name, product.Price))
-                    .DefaultIfEmpty(this.NotEnoughMoneyReport(product.Name, product.Price))
-                    .Single();
+            return this.account.TryWithdraw(product.Price)
+                .Select(trans => new Receipt(this.Username, product.Name, product.Price))
+                .DefaultIfEmpty(this.NotEnoughMoneyReport(product.Name, product.Price)).Single();
         }
 
         private IPurchaseReport NotEnoughMoneyReport(string productName, decimal price)
         {
-            return
-                this.reportFactory
-                    .CreateNotEnoughMoney(this.Username, productName, price);
+            return this.reportFactory.CreateNotEnoughMoney(this.Username, productName, price);
         }
     }
 }

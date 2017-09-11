@@ -1,28 +1,17 @@
-﻿using System.Linq;
-using DddInPractice.Logic.Atms;
-using DddInPractice.Logic.Common;
-using DddInPractice.Logic.SharedKernel;
-using DddInPractice.Logic.Utils;
-using FluentAssertions;
-using Xunit;
-using static DddInPractice.Logic.SharedKernel.Money;
+﻿using static DddInPractice.Logic.SharedKernel.Money;
 
 namespace DddInPractice.Tests
 {
+    using System.Linq;
+
+    using DddInPractice.Logic.Atms;
+
+    using FluentAssertions;
+
+    using Xunit;
+
     public class AtmSpecs
     {
-        [Fact]
-        public void Take_money_exchanges_money_with_commission()
-        {
-            var atm = new Atm();
-            atm.LoadMoney(Dollar);
-
-            atm.TakeMoney(1m);
-
-            atm.MoneyInside.Amount.Should().Be(0m);
-            atm.MoneyCharged.Should().Be(1.01m);
-        }
-
         [Fact]
         public void Commission_is_at_least_one_cent()
         {
@@ -46,6 +35,18 @@ namespace DddInPractice.Tests
         }
 
         [Fact]
+        public void Take_money_exchanges_money_with_commission()
+        {
+            var atm = new Atm();
+            atm.LoadMoney(Dollar);
+
+            atm.TakeMoney(1m);
+
+            atm.MoneyInside.Amount.Should().Be(0m);
+            atm.MoneyCharged.Should().Be(1.01m);
+        }
+
+        [Fact]
         public void Take_money_raises_an_event()
         {
             Atm atm = new Atm();
@@ -57,13 +58,12 @@ namespace DddInPractice.Tests
         }
     }
 
-
     internal static class AtmExtensions
     {
         public static void ShouldContainBalanceChangedEvent(this Atm atm, decimal delta)
         {
-            BalanceChangedEvent domainEvent = (BalanceChangedEvent)atm.DomainEvents
-                .SingleOrDefault(x => x.GetType() == typeof(BalanceChangedEvent));
+            BalanceChangedEvent domainEvent =
+                (BalanceChangedEvent)atm.DomainEvents.SingleOrDefault(x => x.GetType() == typeof(BalanceChangedEvent));
 
             domainEvent.Should().NotBeNull();
             domainEvent.Delta.Should().Be(delta);

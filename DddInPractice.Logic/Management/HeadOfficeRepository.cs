@@ -1,7 +1,7 @@
-﻿using DddInPractice.Logic.Common;
-
-namespace DddInPractice.Logic.Management
+﻿namespace DddInPractice.Logic.Management
 {
+    using DddInPractice.Logic.Common;
+
     public class HeadOfficeRepository : Repository<HeadOffice>
     {
     }

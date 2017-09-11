@@ -1,8 +1,8 @@
-﻿using NullReferencesDemo.Presentation.Interfaces;
-
-namespace NullReferencesDemo.Presentation.PurchaseReports
+﻿namespace NullReferencesDemo.Presentation.PurchaseReports
 {
-    public class NotSignedIn: IPurchaseReport
+    using NullReferencesDemo.Presentation.Interfaces;
+
+    public class NotSignedIn : IPurchaseReport
     {
     }
 }
