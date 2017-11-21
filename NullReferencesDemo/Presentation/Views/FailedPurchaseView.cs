@@ -1,9 +1,8 @@
-﻿namespace NullReferencesDemo.Presentation.Views
+﻿using System;
+using NullReferencesDemo.Presentation.Interfaces;
+
+namespace NullReferencesDemo.Presentation.Views
 {
-    using System;
-
-    using NullReferencesDemo.Presentation.Interfaces;
-
     public class FailedPurchaseView : IView
     {
         public void Render()

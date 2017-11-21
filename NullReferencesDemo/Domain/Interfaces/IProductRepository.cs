@@ -1,9 +1,8 @@
-﻿namespace NullReferencesDemo.Domain.Interfaces
+﻿using System.Collections.Generic;
+using NullReferencesDemo.Common;
+
+namespace NullReferencesDemo.Domain.Interfaces
 {
-    using System.Collections.Generic;
-
-    using NullReferencesDemo.Common;
-
     public interface IProductRepository
     {
         IEnumerable<IProduct> GetAll();

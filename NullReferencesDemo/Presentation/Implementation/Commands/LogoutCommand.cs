@@ -1,11 +1,11 @@
-﻿namespace NullReferencesDemo.Presentation.Implementation.Commands
-{
-    using NullReferencesDemo.Presentation.Implementation.CommandResults;
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Implementation.CommandResults;
+using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Presentation.Implementation.Commands
+{
     internal class LogoutCommand : ICommand
     {
-        private IApplicationServices appServices;
+        private readonly IApplicationServices appServices;
 
         public LogoutCommand(IApplicationServices appServices)
         {
@@ -14,9 +14,9 @@
 
         public ICommandResult Execute()
         {
-            string username = this.appServices.LoggedInUsername;
+            var username = appServices.LoggedInUsername;
 
-            this.appServices.Logout();
+            appServices.Logout();
 
             return new UserLoggedOut(username);
         }

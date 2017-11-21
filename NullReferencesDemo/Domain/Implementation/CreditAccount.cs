@@ -1,12 +1,11 @@
-﻿namespace NullReferencesDemo.Domain.Implementation
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NullReferencesDemo.Common;
+using NullReferencesDemo.Domain.Interfaces;
+
+namespace NullReferencesDemo.Domain.Implementation
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using NullReferencesDemo.Common;
-    using NullReferencesDemo.Domain.Interfaces;
-
     public class CreditAccount : AccountBase
     {
         private readonly IList<MoneyTransaction> pendingTransactions = new List<MoneyTransaction>();
@@ -18,25 +17,22 @@
             if (transactionSelectionStrategy == null)
                 throw new ArgumentNullException(nameof(transactionSelectionStrategy));
 
-            this.pendingTransactionSelectionStrategy = transactionSelectionStrategy;
+            pendingTransactionSelectionStrategy = transactionSelectionStrategy;
         }
 
         public override decimal Balance
         {
-            get
-            {
-                return base.Balance + this.pendingTransactions.Sum(trans => trans.Amount);
-            }
+            get { return base.Balance + pendingTransactions.Sum(trans => trans.Amount); }
         }
 
         public override MoneyTransaction Deposit(decimal amount)
         {
             if (amount <= 0) throw new ArgumentException("Amount to deposit must be positive.");
 
-            MoneyTransaction transaction = new MoneyTransaction(amount);
-            this.RegisterTransaction(transaction);
+            var transaction = new MoneyTransaction(amount);
+            RegisterTransaction(transaction);
 
-            this.ProcessPendingWithdrawals();
+            ProcessPendingWithdrawals();
 
             return transaction;
         }
@@ -45,10 +41,10 @@
         {
             if (amount <= 0) throw new ArgumentException("Amount to withdraw must be positive.", nameof(amount));
 
-            MoneyTransaction transaction = new MoneyTransaction(-amount);
+            var transaction = new MoneyTransaction(-amount);
 
-            this.pendingTransactions.Add(transaction);
-            this.ProcessPendingWithdrawals();
+            pendingTransactions.Add(transaction);
+            ProcessPendingWithdrawals();
 
             return Option<MoneyTransaction>.Create(transaction);
         }
@@ -57,27 +53,26 @@
         {
             if (!option.Any()) return;
 
-            MoneyTransaction transaction = option.Single();
+            var transaction = option.Single();
 
-            this.RegisterTransaction(transaction);
-            this.pendingTransactions.Remove(transaction);
+            RegisterTransaction(transaction);
+            pendingTransactions.Remove(transaction);
         }
 
         private void ProcessPendingWithdrawals()
         {
-            Option<MoneyTransaction> option = Option<MoneyTransaction>.CreateEmpty();
+            var option = Option<MoneyTransaction>.CreateEmpty();
 
             do
             {
-                option = this.TrySelectPendingTransaction();
-                this.ProcessPendingWithdrawal(option);
-            }
-            while (option.Any());
+                option = TrySelectPendingTransaction();
+                ProcessPendingWithdrawal(option);
+            } while (option.Any());
         }
 
         private Option<MoneyTransaction> TrySelectPendingTransaction()
         {
-            return this.pendingTransactionSelectionStrategy.TrySelectOne(this.pendingTransactions, base.Balance);
+            return pendingTransactionSelectionStrategy.TrySelectOne(pendingTransactions, base.Balance);
         }
     }
 }

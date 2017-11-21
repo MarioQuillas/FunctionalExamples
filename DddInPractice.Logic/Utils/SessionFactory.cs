@@ -1,17 +1,15 @@
-﻿namespace DddInPractice.Logic.Utils
+﻿using System.Reflection;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Conventions;
+using FluentNHibernate.Conventions.AcceptanceCriteria;
+using FluentNHibernate.Conventions.Helpers;
+using FluentNHibernate.Conventions.Instances;
+using NHibernate;
+using NHibernate.Event;
+
+namespace DddInPractice.Logic.Utils
 {
-    using System.Reflection;
-
-    using FluentNHibernate.Cfg;
-    using FluentNHibernate.Cfg.Db;
-    using FluentNHibernate.Conventions;
-    using FluentNHibernate.Conventions.AcceptanceCriteria;
-    using FluentNHibernate.Conventions.Helpers;
-    using FluentNHibernate.Conventions.Instances;
-
-    using NHibernate;
-    using NHibernate.Event;
-
     public static class SessionFactory
     {
         private static ISessionFactory _factory;
@@ -28,7 +26,7 @@
 
         private static ISessionFactory BuildSessionFactory(string connectionString)
         {
-            FluentConfiguration configuration = Fluently.Configure()
+            var configuration = Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(connectionString)).Mappings(
                     m => m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()).Conventions.Add(
                             ForeignKey.EndsWith("ID"),
@@ -37,16 +35,16 @@
                                 x => x.Not.Nullable())).Conventions.Add<TableNameConvention>().Conventions
                         .Add<HiLoConvention>()).ExposeConfiguration(
                     x =>
-                        {
-                            x.EventListeners.PostCommitUpdateEventListeners =
-                                new IPostUpdateEventListener[] { new EventListener() };
-                            x.EventListeners.PostCommitInsertEventListeners =
-                                new IPostInsertEventListener[] { new EventListener() };
-                            x.EventListeners.PostCommitDeleteEventListeners =
-                                new IPostDeleteEventListener[] { new EventListener() };
-                            x.EventListeners.PostCollectionUpdateEventListeners =
-                                new IPostCollectionUpdateEventListener[] { new EventListener() };
-                        });
+                    {
+                        x.EventListeners.PostCommitUpdateEventListeners =
+                            new IPostUpdateEventListener[] {new EventListener()};
+                        x.EventListeners.PostCommitInsertEventListeners =
+                            new IPostInsertEventListener[] {new EventListener()};
+                        x.EventListeners.PostCommitDeleteEventListeners =
+                            new IPostDeleteEventListener[] {new EventListener()};
+                        x.EventListeners.PostCollectionUpdateEventListeners =
+                            new IPostCollectionUpdateEventListener[] {new EventListener()};
+                    });
 
             return configuration.BuildSessionFactory();
         }

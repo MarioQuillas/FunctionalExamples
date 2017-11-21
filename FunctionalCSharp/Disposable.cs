@@ -1,7 +1,7 @@
-﻿namespace FunctionalCSharp
-{
-    using System;
+﻿using System;
 
+namespace FunctionalCSharp
+{
     public static class Disposable
     {
         public static TResult Using<TDisposable, TResult>(Func<TDisposable> factory, Func<TDisposable, TResult> fn)

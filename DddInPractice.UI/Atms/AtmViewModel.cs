@@ -1,9 +1,9 @@
-﻿namespace DddInPractice.UI.Atms
-{
-    using DddInPractice.Logic.Atms;
-    using DddInPractice.Logic.SharedKernel;
-    using DddInPractice.UI.Common;
+﻿using DddInPractice.Logic.Atms;
+using DddInPractice.Logic.SharedKernel;
+using DddInPractice.UI.Common;
 
+namespace DddInPractice.UI.Atms
+{
     public class AtmViewModel : ViewModel
     {
         private readonly Atm _atm;
@@ -16,57 +16,54 @@
 
         public AtmViewModel(Atm atm)
         {
-            this._atm = atm;
-            this._repository = new AtmRepository();
-            this._paymentGateway = new PaymentGateway();
+            _atm = atm;
+            _repository = new AtmRepository();
+            _paymentGateway = new PaymentGateway();
 
-            this.TakeMoneyCommand = new Command<decimal>(x => x > 0, this.TakeMoney);
+            TakeMoneyCommand = new Command<decimal>(x => x > 0, TakeMoney);
         }
 
         public override string Caption => "ATM";
 
         public string Message
         {
-            get
-            {
-                return this._message;
-            }
+            get => _message;
 
             private set
             {
-                this._message = value;
-                this.Notify();
+                _message = value;
+                Notify();
             }
         }
 
-        public string MoneyCharged => this._atm.MoneyCharged.ToString("C2");
+        public string MoneyCharged => _atm.MoneyCharged.ToString("C2");
 
-        public Money MoneyInside => this._atm.MoneyInside;
+        public Money MoneyInside => _atm.MoneyInside;
 
-        public Command<decimal> TakeMoneyCommand { get; private set; }
+        public Command<decimal> TakeMoneyCommand { get; }
 
         private void NotifyClient(string message)
         {
-            this.Message = message;
-            this.Notify(nameof(this.MoneyInside));
-            this.Notify(nameof(this.MoneyCharged));
+            Message = message;
+            Notify(nameof(MoneyInside));
+            Notify(nameof(MoneyCharged));
         }
 
         private void TakeMoney(decimal amount)
         {
-            string error = this._atm.CanTakeMoney(amount);
+            var error = _atm.CanTakeMoney(amount);
             if (error != string.Empty)
             {
-                this.NotifyClient(error);
+                NotifyClient(error);
                 return;
             }
 
-            decimal amountWithCommission = this._atm.CaluculateAmountWithCommission(amount);
-            this._paymentGateway.ChargePayment(amountWithCommission);
-            this._atm.TakeMoney(amount);
-            this._repository.Save(this._atm);
+            var amountWithCommission = _atm.CaluculateAmountWithCommission(amount);
+            _paymentGateway.ChargePayment(amountWithCommission);
+            _atm.TakeMoney(amount);
+            _repository.Save(_atm);
 
-            this.NotifyClient("You have taken " + amount.ToString("C2"));
+            NotifyClient("You have taken " + amount.ToString("C2"));
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace NullReferencesDemo.Application.Interfaces
+﻿using System.Collections.Generic;
+using NullReferencesDemo.Presentation.Interfaces;
+
+namespace NullReferencesDemo.Application.Interfaces
 {
-    using System.Collections.Generic;
-
-    using NullReferencesDemo.Presentation.Interfaces;
-
     public interface IDomainServices
     {
         void CreateUser(string username);

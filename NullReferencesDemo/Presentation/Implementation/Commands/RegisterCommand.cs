@@ -1,10 +1,9 @@
-﻿namespace NullReferencesDemo.Presentation.Implementation.Commands
+﻿using System;
+using NullReferencesDemo.Presentation.Implementation.CommandResults;
+using NullReferencesDemo.Presentation.Interfaces;
+
+namespace NullReferencesDemo.Presentation.Implementation.Commands
 {
-    using System;
-
-    using NullReferencesDemo.Presentation.Implementation.CommandResults;
-    using NullReferencesDemo.Presentation.Interfaces;
-
     internal class RegisterCommand : ICommand
     {
         private readonly IApplicationServices appServices;
@@ -17,9 +16,9 @@
         public ICommandResult Execute()
         {
             Console.Write("Enter username to register: ");
-            string username = Console.ReadLine();
+            var username = Console.ReadLine();
 
-            this.appServices.RegisterUser(username);
+            appServices.RegisterUser(username);
 
             return new UserRegistered(username);
         }

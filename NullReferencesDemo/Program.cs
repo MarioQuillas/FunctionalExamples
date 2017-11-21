@@ -1,45 +1,43 @@
-﻿namespace NullReferencesDemo
-{
-    using NullReferencesDemo.Application.Implementation;
-    using NullReferencesDemo.Domain.Implementation;
-    using NullReferencesDemo.Infrastructure.Implementation;
-    using NullReferencesDemo.Presentation.Implementation;
-    using NullReferencesDemo.Presentation.Implementation.CommandResults;
-    using NullReferencesDemo.Presentation.Interfaces;
-    using NullReferencesDemo.Presentation.PurchaseReports;
-    using NullReferencesDemo.Presentation.Views;
+﻿using NullReferencesDemo.Application.Implementation;
+using NullReferencesDemo.Domain.Implementation;
+using NullReferencesDemo.Infrastructure.Implementation;
+using NullReferencesDemo.Presentation.Implementation;
+using NullReferencesDemo.Presentation.Implementation.CommandResults;
+using NullReferencesDemo.Presentation.Interfaces;
+using NullReferencesDemo.Presentation.PurchaseReports;
+using NullReferencesDemo.Presentation.Views;
 
-    class Program
+namespace NullReferencesDemo
+{
+    internal class Program
     {
-        static TPurchaseReport Cast<TPurchaseReport>(ICommandResult cmdResult)
+        private static TPurchaseReport Cast<TPurchaseReport>(ICommandResult cmdResult)
             where TPurchaseReport : IPurchaseReport
         {
             if (!(cmdResult is PurchaseResult purchaseResult)) return default(TPurchaseReport);
 
-            IPurchaseReport report = purchaseResult.Report;
+            var report = purchaseResult.Report;
 
-            return (TPurchaseReport)report;
+            return (TPurchaseReport) report;
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             IPurchaseReportFactory reportFactory = new PurchaseReportFactory();
 
-            ViewLocator viewLocator = SetupViewLocator();
+            var viewLocator = SetupViewLocator();
 
-            UserInterface ui = new UserInterface(
+            var ui = new UserInterface(
                 new ApplicationServices(
                     new DomainServices(new UserRepository(), new ProductRepository(), reportFactory),
                     reportFactory),
                 viewLocator);
 
             while (ui.ReadCommand())
-            {
                 ui.ExecuteCommand();
-            }
         }
 
-        static bool PurchaseSelector<TPurchaseReport>(ICommandResult cmdResult)
+        private static bool PurchaseSelector<TPurchaseReport>(ICommandResult cmdResult)
             where TPurchaseReport : IPurchaseReport
         {
             if (!(cmdResult is PurchaseResult purchaseResult)) return false;
@@ -47,7 +45,7 @@
             return purchaseResult.Report.GetType() == typeof(TPurchaseReport);
         }
 
-        static bool Selector<TCommand>(ICommandResult cmdResult)
+        private static bool Selector<TCommand>(ICommandResult cmdResult)
             where TCommand : ICommandResult
         {
             return cmdResult != null && cmdResult.GetType() == typeof(TCommand);
@@ -55,13 +53,13 @@
 
         private static ViewLocator SetupViewLocator()
         {
-            ViewLocator viewLocator = new ViewLocator();
+            var viewLocator = new ViewLocator();
 
-            viewLocator.RegisterService(Selector<DepositResult>, obj => new DepositView((DepositResult)obj));
-            viewLocator.RegisterService(Selector<LoginFailed>, obj => new LoginFailedView((LoginFailed)obj));
-            viewLocator.RegisterService(Selector<UserLoggedIn>, obj => new UserLoggedInView((UserLoggedIn)obj));
-            viewLocator.RegisterService(Selector<UserLoggedOut>, obj => new UserLoggedOutView((UserLoggedOut)obj));
-            viewLocator.RegisterService(Selector<UserRegistered>, obj => new UserRegisteredView((UserRegistered)obj));
+            viewLocator.RegisterService(Selector<DepositResult>, obj => new DepositView((DepositResult) obj));
+            viewLocator.RegisterService(Selector<LoginFailed>, obj => new LoginFailedView((LoginFailed) obj));
+            viewLocator.RegisterService(Selector<UserLoggedIn>, obj => new UserLoggedInView((UserLoggedIn) obj));
+            viewLocator.RegisterService(Selector<UserLoggedOut>, obj => new UserLoggedOutView((UserLoggedOut) obj));
+            viewLocator.RegisterService(Selector<UserRegistered>, obj => new UserRegisteredView((UserRegistered) obj));
 
             viewLocator.RegisterService(PurchaseSelector<FailedPurchase>, obj => new FailedPurchaseView());
             viewLocator.RegisterService(

@@ -1,9 +1,8 @@
-﻿namespace DddInPractice.Logic.Common
+﻿using System;
+using NHibernate.Proxy;
+
+namespace DddInPractice.Logic.Common
 {
-    using System;
-
-    using NHibernate.Proxy;
-
     public abstract class Entity
     {
         public virtual long Id { get; protected set; }
@@ -30,16 +29,16 @@
 
             if (ReferenceEquals(this, other)) return true;
 
-            if (this.GetRealType() != other.GetRealType()) return false;
+            if (GetRealType() != other.GetRealType()) return false;
 
-            if (this.Id == 0 || other.Id == 0) return false;
+            if (Id == 0 || other.Id == 0) return false;
 
-            return this.Id == other.Id;
+            return Id == other.Id;
         }
 
         public override int GetHashCode()
         {
-            return (this.GetRealType().ToString() + this.Id).GetHashCode();
+            return (GetRealType().ToString() + Id).GetHashCode();
         }
 
         private Type GetRealType()

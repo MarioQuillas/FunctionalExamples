@@ -23,12 +23,12 @@
 
             if (ReferenceEquals(valueObject, null)) return false;
 
-            return this.EqualsCore(valueObject);
+            return EqualsCore(valueObject);
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCodeCore();
+            return GetHashCodeCore();
         }
 
         protected abstract bool EqualsCore(T other);

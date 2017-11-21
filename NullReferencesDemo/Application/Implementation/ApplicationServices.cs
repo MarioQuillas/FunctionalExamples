@@ -1,11 +1,10 @@
-﻿namespace NullReferencesDemo.Application.Implementation
+﻿using System;
+using System.Collections.Generic;
+using NullReferencesDemo.Application.Interfaces;
+using NullReferencesDemo.Presentation.Interfaces;
+
+namespace NullReferencesDemo.Application.Implementation
 {
-    using System;
-    using System.Collections.Generic;
-
-    using NullReferencesDemo.Application.Interfaces;
-    using NullReferencesDemo.Presentation.Interfaces;
-
     public class ApplicationServices : IApplicationServices
     {
         private readonly IDomainServices domainServices;
@@ -17,24 +16,18 @@
         public ApplicationServices(IDomainServices domainServices, IPurchaseReportFactory reportFactory)
         {
             this.domainServices = domainServices;
-            this.loggedInUsername = string.Empty;
+            loggedInUsername = string.Empty;
             this.reportFactory = reportFactory;
         }
 
-        public bool IsUserLoggedIn
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(this.loggedInUsername);
-            }
-        }
+        public bool IsUserLoggedIn => !string.IsNullOrEmpty(loggedInUsername);
 
         public decimal LoggedInUserBalance
         {
             get
             {
-                this.AssertUserLoggedIn();
-                return this.domainServices.GetBalance(this.loggedInUsername);
+                AssertUserLoggedIn();
+                return domainServices.GetBalance(loggedInUsername);
             }
         }
 
@@ -42,51 +35,51 @@
         {
             get
             {
-                this.AssertUserLoggedIn();
-                return this.loggedInUsername;
+                AssertUserLoggedIn();
+                return loggedInUsername;
             }
         }
 
         public void Deposit(decimal amount)
         {
-            this.AssertUserLoggedIn();
-            this.domainServices.Deposit(this.loggedInUsername, amount);
+            AssertUserLoggedIn();
+            domainServices.Deposit(loggedInUsername, amount);
         }
 
         public IEnumerable<StockItem> GetAvailableItems()
         {
-            return this.domainServices.GetAvailableItems();
+            return domainServices.GetAvailableItems();
         }
 
         public bool Login(string username)
         {
-            bool loggedIn = this.domainServices.IsRegistered(username);
+            var loggedIn = domainServices.IsRegistered(username);
 
-            if (loggedIn) this.loggedInUsername = username;
+            if (loggedIn) loggedInUsername = username;
 
             return loggedIn;
         }
 
         public void Logout()
         {
-            this.loggedInUsername = string.Empty;
+            loggedInUsername = string.Empty;
         }
 
         public IPurchaseReport Purchase(string itemName)
         {
-            if (!this.IsUserLoggedIn) return this.reportFactory.CreateNotSignedIn();
+            if (!IsUserLoggedIn) return reportFactory.CreateNotSignedIn();
 
-            return this.domainServices.Purchase(this.loggedInUsername, itemName);
+            return domainServices.Purchase(loggedInUsername, itemName);
         }
 
         public void RegisterUser(string username)
         {
-            this.domainServices.CreateUser(username);
+            domainServices.CreateUser(username);
         }
 
         private void AssertUserLoggedIn()
         {
-            if (!this.IsUserLoggedIn) throw new InvalidOperationException("No user logged in.");
+            if (!IsUserLoggedIn) throw new InvalidOperationException("No user logged in.");
         }
     }
 }

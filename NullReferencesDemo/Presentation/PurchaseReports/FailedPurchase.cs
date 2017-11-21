@@ -1,7 +1,7 @@
-﻿namespace NullReferencesDemo.Presentation.PurchaseReports
-{
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Presentation.PurchaseReports
+{
     public class FailedPurchase : IPurchaseReport
     {
         private static FailedPurchase instance;

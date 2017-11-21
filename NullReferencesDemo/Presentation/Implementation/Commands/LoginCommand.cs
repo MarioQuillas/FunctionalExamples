@@ -1,13 +1,12 @@
-﻿namespace NullReferencesDemo.Presentation.Implementation.Commands
+﻿using System;
+using NullReferencesDemo.Presentation.Implementation.CommandResults;
+using NullReferencesDemo.Presentation.Interfaces;
+
+namespace NullReferencesDemo.Presentation.Implementation.Commands
 {
-    using System;
-
-    using NullReferencesDemo.Presentation.Implementation.CommandResults;
-    using NullReferencesDemo.Presentation.Interfaces;
-
     internal class LoginCommand : ICommand
     {
-        private IApplicationServices appServices;
+        private readonly IApplicationServices appServices;
 
         public LoginCommand(IApplicationServices appServices)
         {
@@ -17,10 +16,10 @@
         public ICommandResult Execute()
         {
             Console.Write("Enter username: ");
-            string username = Console.ReadLine();
+            var username = Console.ReadLine();
 
-            if (this.appServices.Login(username))
-                return new UserLoggedIn(username, this.appServices.LoggedInUserBalance);
+            if (appServices.Login(username))
+                return new UserLoggedIn(username, appServices.LoggedInUserBalance);
 
             return new LoginFailed(username);
         }

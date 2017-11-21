@@ -1,10 +1,13 @@
-﻿namespace NullReferencesDemo.Presentation.Implementation.Commands
-{
-    using NullReferencesDemo.Presentation.Implementation.CommandResults;
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Implementation.CommandResults;
+using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Presentation.Implementation.Commands
+{
     internal class DoNothingCommand : ICommand
     {
-        public ICommandResult Execute() => new NoResult();
+        public ICommandResult Execute()
+        {
+            return new NoResult();
+        }
     }
 }

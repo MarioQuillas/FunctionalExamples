@@ -1,15 +1,15 @@
-﻿namespace DddInPractice.Logic.SnackMachines
-{
-    using DddInPractice.Logic.Common;
+﻿using DddInPractice.Logic.Common;
 
+namespace DddInPractice.Logic.SnackMachines
+{
     public class Slot : Entity
     {
         public Slot(SnackMachine snackMachine, int position)
             : this()
         {
-            this.SnackMachine = snackMachine;
-            this.Position = position;
-            this.SnackPile = SnackPile.Empty;
+            SnackMachine = snackMachine;
+            Position = position;
+            SnackPile = SnackPile.Empty;
         }
 
         protected Slot()

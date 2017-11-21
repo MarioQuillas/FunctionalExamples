@@ -1,17 +1,16 @@
-﻿namespace NullReferencesDemo.Presentation.Views
+﻿using System;
+using NullReferencesDemo.Presentation.Interfaces;
+using NullReferencesDemo.Presentation.PurchaseReports;
+
+namespace NullReferencesDemo.Presentation.Views
 {
-    using System;
-
-    using NullReferencesDemo.Presentation.Interfaces;
-    using NullReferencesDemo.Presentation.PurchaseReports;
-
     public class NotEnoughMoneyView : IView
     {
         public NotEnoughMoneyView(NotEnoughMoney data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            this.Data = data;
+            Data = data;
         }
 
         private NotEnoughMoney Data { get; }
@@ -20,9 +19,9 @@
         {
             Console.WriteLine(
                 "Dear {0},\nYou do not have {1:C} to pay for the {2}.",
-                this.Data.Username,
-                this.Data.Price,
-                this.Data.ProductName);
+                Data.Username,
+                Data.Price,
+                Data.ProductName);
         }
     }
 }

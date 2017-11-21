@@ -1,17 +1,17 @@
-﻿namespace NullReferencesDemo.Infrastructure.Implementation
-{
-    using NullReferencesDemo.Domain.Interfaces;
+﻿using NullReferencesDemo.Domain.Interfaces;
 
+namespace NullReferencesDemo.Infrastructure.Implementation
+{
     internal class ProductData : IProduct
     {
         public ProductData(string name, decimal price)
         {
-            this.Name = name;
-            this.Price = price;
+            Name = name;
+            Price = price;
         }
 
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public decimal Price { get; private set; }
+        public decimal Price { get; }
     }
 }

@@ -22,15 +22,21 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="Snack machines:" Margin="5 10 0 0" FontSize="15" />
+                <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="Snack machines:" Margin="5 10 0 0"
+                           FontSize="15" />
 
-                <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal" Margin="5 10 0 0">
-                    <Button FontSize="15" Padding="5" Command="{Binding ShowSnackMachineCommand}" CommandParameter="{Binding ElementName=grdSnackMachines, Path=SelectedItem}" Content="Show" />
-                    <Button FontSize="15" Padding="5" Command="{Binding UnloadCashCommand}" CommandParameter="{Binding ElementName=grdSnackMachines, Path=SelectedItem}" Content="Unload cash" />
+                <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal"
+                            Margin="5 10 0 0">
+                    <Button FontSize="15" Padding="5" Command="{Binding ShowSnackMachineCommand}"
+                            CommandParameter="{Binding ElementName=grdSnackMachines, Path=SelectedItem}" Content="Show" />
+                    <Button FontSize="15" Padding="5" Command="{Binding UnloadCashCommand}"
+                            CommandParameter="{Binding ElementName=grdSnackMachines, Path=SelectedItem}"
+                            Content="Unload cash" />
                 </StackPanel>
 
-                <DataGrid Margin="5 2 0 0" Grid.Column="0" Grid.Row="2" ItemsSource="{Binding SnackMachines}" IsReadOnly="True" AutoGenerateColumns="False"
-                      x:Name="grdSnackMachines" SelectionMode="Single" FontSize="15">
+                <DataGrid Margin="5 2 0 0" Grid.Column="0" Grid.Row="2" ItemsSource="{Binding SnackMachines}"
+                          IsReadOnly="True" AutoGenerateColumns="False"
+                          x:Name="grdSnackMachines" SelectionMode="Single" FontSize="15">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
                         <DataGridTextColumn Header="MoneyInside" Binding="{Binding MoneyInside, StringFormat={}{0:C2}}" />
@@ -39,13 +45,17 @@
 
                 <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="Bold" Text="ATMs:" Margin="5 10 0 0" FontSize="15" />
 
-                <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal" Margin="5 10 0 0">
-                    <Button FontSize="15" Padding="5" Command="{Binding ShowAtmCommand}" CommandParameter="{Binding ElementName=grdAtms, Path=SelectedItem}" Content="Show" />
-                    <Button FontSize="15" Padding="5" Command="{Binding LoadCashToAtmCommand}" CommandParameter="{Binding ElementName=grdAtms, Path=SelectedItem}" Content="Load cash" />
+                <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal"
+                            Margin="5 10 0 0">
+                    <Button FontSize="15" Padding="5" Command="{Binding ShowAtmCommand}"
+                            CommandParameter="{Binding ElementName=grdAtms, Path=SelectedItem}" Content="Show" />
+                    <Button FontSize="15" Padding="5" Command="{Binding LoadCashToAtmCommand}"
+                            CommandParameter="{Binding ElementName=grdAtms, Path=SelectedItem}" Content="Load cash" />
                 </StackPanel>
 
-                <DataGrid Margin="5 2 0 0" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Atms}" IsReadOnly="True" AutoGenerateColumns="False"
-                      x:Name="grdAtms" SelectionMode="Single" FontSize="15">
+                <DataGrid Margin="5 2 0 0" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Atms}" IsReadOnly="True"
+                          AutoGenerateColumns="False"
+                          x:Name="grdAtms" SelectionMode="Single" FontSize="15">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
                         <DataGridTextColumn Header="Cash" Binding="{Binding Cash, StringFormat={}{0:C2}}" />

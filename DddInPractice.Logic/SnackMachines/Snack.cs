@@ -1,7 +1,7 @@
-﻿namespace DddInPractice.Logic.SnackMachines
-{
-    using DddInPractice.Logic.Common;
+﻿using DddInPractice.Logic.Common;
 
+namespace DddInPractice.Logic.SnackMachines
+{
     public class Snack : AggregateRoot
     {
         public static readonly Snack Chocolate = new Snack(1, "Chocolate");
@@ -19,8 +19,8 @@
         private Snack(long id, string name)
             : this()
         {
-            this.Id = id;
-            this.Name = name;
+            Id = id;
+            Name = name;
         }
 
         public virtual string Name { get; }

@@ -1,14 +1,14 @@
-﻿namespace DddInPractice.Logic.Atms
-{
-    using DddInPractice.Logic.Common;
+﻿using DddInPractice.Logic.Common;
 
+namespace DddInPractice.Logic.Atms
+{
     public class BalanceChangedEvent : IDomainEvent
     {
         public BalanceChangedEvent(decimal delta)
         {
-            this.Delta = delta;
+            Delta = delta;
         }
 
-        public decimal Delta { get; private set; }
+        public decimal Delta { get; }
     }
 }

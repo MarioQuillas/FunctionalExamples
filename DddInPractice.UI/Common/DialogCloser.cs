@@ -1,7 +1,7 @@
-﻿namespace DddInPractice.UI.Common
-{
-    using System.Windows;
+﻿using System.Windows;
 
+namespace DddInPractice.UI.Common
+{
     public static class DialogCloser
     {
         public static readonly DependencyProperty DialogResultProperty = DependencyProperty.RegisterAttached(
@@ -19,9 +19,7 @@
         {
             var window = d as Window;
             if (window != null)
-            {
                 window.DialogResult = e.NewValue as bool?;
-            }
         }
     }
 }

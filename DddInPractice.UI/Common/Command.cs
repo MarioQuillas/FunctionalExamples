@@ -1,8 +1,8 @@
-﻿namespace DddInPractice.UI.Common
-{
-    using System;
-    using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
+namespace DddInPractice.UI.Common
+{
     public class Command<T> : ICommand
     {
         private readonly Func<T, bool> canExecute;
@@ -22,27 +22,21 @@
 
         public event EventHandler CanExecuteChanged
         {
-            add
-            {
-                CommandManager.RequerySuggested += value;
-            }
+            add => CommandManager.RequerySuggested += value;
 
-            remove
-            {
-                CommandManager.RequerySuggested -= value;
-            }
+            remove => CommandManager.RequerySuggested -= value;
         }
 
         public bool CanExecute(object parameter)
         {
             if (parameter == null && typeof(T).IsValueType) return false;
 
-            return this.canExecute((T)parameter);
+            return canExecute((T) parameter);
         }
 
         public void Execute(object parameter)
         {
-            this.execute((T)parameter);
+            execute((T) parameter);
         }
     }
 

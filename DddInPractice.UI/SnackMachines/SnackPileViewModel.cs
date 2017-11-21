@@ -1,27 +1,26 @@
+using System;
+using System.Windows;
+using System.Windows.Media;
+using DddInPractice.Logic.SnackMachines;
+
 namespace DddInPractice.UI.SnackMachines
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Media;
-
-    using DddInPractice.Logic.SnackMachines;
-
     public class SnackPileViewModel
     {
         private readonly SnackPile _snackPile;
 
         public SnackPileViewModel(SnackPile snackPile)
         {
-            this._snackPile = snackPile;
+            _snackPile = snackPile;
         }
 
-        public int Amount => this._snackPile.Quantity;
+        public int Amount => _snackPile.Quantity;
 
-        public ImageSource Image => (ImageSource)Application.Current.FindResource("img" + this._snackPile.Snack.Name);
+        public ImageSource Image => (ImageSource) Application.Current.FindResource("img" + _snackPile.Snack.Name);
 
-        public int ImageWidth => this.GetImageWidth(this._snackPile.Snack);
+        public int ImageWidth => GetImageWidth(_snackPile.Snack);
 
-        public string Price => this._snackPile.Price.ToString("C2");
+        public string Price => _snackPile.Price.ToString("C2");
 
         private int GetImageWidth(Snack snack)
         {

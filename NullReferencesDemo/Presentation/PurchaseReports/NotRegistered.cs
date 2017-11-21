@@ -1,12 +1,12 @@
-﻿namespace NullReferencesDemo.Presentation.PurchaseReports
-{
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Presentation.PurchaseReports
+{
     public class NotRegistered : IPurchaseReport
     {
         public NotRegistered(string username)
         {
-            this.Username = username;
+            Username = username;
         }
 
         public string Username { get; }

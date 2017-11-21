@@ -1,10 +1,10 @@
-﻿namespace DddInPractice.Logic.Common
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace DddInPractice.Logic.Common
+{
     public static class DomainEvents_old
     {
         private static Dictionary<Type, List<Delegate>> _dynamicHandlers;
@@ -26,20 +26,18 @@
         public static void Raise<T>(T domainEvent)
             where T : IDomainEvent
         {
-            foreach (Delegate handler in _dynamicHandlers[domainEvent.GetType()])
+            foreach (var handler in _dynamicHandlers[domainEvent.GetType()])
             {
-                var action = (Action<T>)handler;
+                var action = (Action<T>) handler;
                 action(domainEvent);
             }
 
-            foreach (Type handler in _staticHandlers)
-            {
+            foreach (var handler in _staticHandlers)
                 if (typeof(IHandler<T>).IsAssignableFrom(handler))
                 {
-                    IHandler<T> instance = (IHandler<T>)Activator.CreateInstance(handler);
+                    var instance = (IHandler<T>) Activator.CreateInstance(handler);
                     instance.Handle(domainEvent);
                 }
-            }
         }
 
         public static void Register<T>(Action<T> eventHandler)

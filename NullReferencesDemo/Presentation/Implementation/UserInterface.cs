@@ -1,12 +1,11 @@
-﻿namespace NullReferencesDemo.Presentation.Implementation
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NullReferencesDemo.Presentation.Implementation.Commands;
+using NullReferencesDemo.Presentation.Interfaces;
+
+namespace NullReferencesDemo.Presentation.Implementation
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using NullReferencesDemo.Presentation.Implementation.Commands;
-    using NullReferencesDemo.Presentation.Interfaces;
-
     public class UserInterface : IUserInterface
     {
         private readonly IApplicationServices appServices;
@@ -21,31 +20,31 @@
         {
             this.appServices = appServices;
 
-            this.menu = new[]
-                            {
-                                MenuItem.CreateNonTerminal(
-                                    "Register new user",
-                                    'R',
-                                    new RegisterCommand(appServices),
-                                    () => true),
-                                MenuItem.CreateNonTerminal("Login", 'L', new LoginCommand(appServices), () => true),
-                                MenuItem.CreateNonTerminal(
-                                    "LogOut",
-                                    'O',
-                                    new LogoutCommand(appServices),
-                                    () => appServices.IsUserLoggedIn),
-                                MenuItem.CreateNonTerminal(
-                                    "Deposit",
-                                    'D',
-                                    new DepositCommand(appServices),
-                                    () => appServices.IsUserLoggedIn),
-                                MenuItem.CreateNonTerminal(
-                                    "Purchase",
-                                    'P',
-                                    new PurchaseCommand(appServices),
-                                    () => true),
-                                MenuItem.CreateTerminal("Quit", 'Q')
-                            };
+            menu = new[]
+            {
+                MenuItem.CreateNonTerminal(
+                    "Register new user",
+                    'R',
+                    new RegisterCommand(appServices),
+                    () => true),
+                MenuItem.CreateNonTerminal("Login", 'L', new LoginCommand(appServices), () => true),
+                MenuItem.CreateNonTerminal(
+                    "LogOut",
+                    'O',
+                    new LogoutCommand(appServices),
+                    () => appServices.IsUserLoggedIn),
+                MenuItem.CreateNonTerminal(
+                    "Deposit",
+                    'D',
+                    new DepositCommand(appServices),
+                    () => appServices.IsUserLoggedIn),
+                MenuItem.CreateNonTerminal(
+                    "Purchase",
+                    'P',
+                    new PurchaseCommand(appServices),
+                    () => true),
+                MenuItem.CreateTerminal("Quit", 'Q')
+            };
 
             this.viewLocator = viewLocator;
         }
@@ -54,7 +53,7 @@
         {
             get
             {
-                if (this.appServices.IsUserLoggedIn) return this.appServices.LoggedInUserBalance.ToString("C");
+                if (appServices.IsUserLoggedIn) return appServices.LoggedInUserBalance.ToString("C");
                 return "N/A";
             }
         }
@@ -63,18 +62,18 @@
         {
             get
             {
-                if (this.appServices.IsUserLoggedIn) return this.appServices.LoggedInUsername;
+                if (appServices.IsUserLoggedIn) return appServices.LoggedInUsername;
                 return "none";
             }
         }
 
         public void ExecuteCommand()
         {
-            ICommandResult result = this.currentCommand.Execute();
+            var result = currentCommand.Execute();
 
-            IView view = this.viewLocator.LocateServiceFor(result);
+            var view = viewLocator.LocateServiceFor(result);
 
-            this.Render(view);
+            Render(view);
 
             Console.WriteLine();
             Console.Write("Press ENTER to continue...");
@@ -83,19 +82,19 @@
 
         public bool ReadCommand()
         {
-            this.RefreshDisplay();
+            RefreshDisplay();
 
-            MenuItem selectedMenuItem = this.SelectMenuItem();
+            var selectedMenuItem = SelectMenuItem();
 
             if (selectedMenuItem.IsTerminalCommand) return false;
 
-            this.currentCommand = selectedMenuItem.Command;
+            currentCommand = selectedMenuItem.Command;
             return true;
         }
 
         private void Highlight(string message)
         {
-            ConsoleColor prevColor = Console.ForegroundColor;
+            var prevColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(message);
             Console.ForegroundColor = prevColor;
@@ -104,14 +103,14 @@
         private void RefreshDisplay()
         {
             Console.Clear();
-            this.ShowStatus();
-            this.ShowMenu();
+            ShowStatus();
+            ShowMenu();
         }
 
         private void Render(IView view)
         {
-            string message = $"Rendering {view.GetType().Name}";
-            string delimiter = new string('-', message.Length);
+            var message = $"Rendering {view.GetType().Name}";
+            var delimiter = new string('-', message.Length);
 
             Console.WriteLine("\n{0}\n{1}\n{0}\n", delimiter, message);
 
@@ -122,9 +121,9 @@
 
         private MenuItem SelectMenuItem()
         {
-            ConsoleKeyInfo key = Console.ReadKey(true);
+            var key = Console.ReadKey(true);
 
-            MenuItem selectedItem = this.menu.Single(item => item.MatchesKey(key.KeyChar));
+            var selectedItem = menu.Single(item => item.MatchesKey(key.KeyChar));
 
             return selectedItem;
         }
@@ -134,7 +133,7 @@
             Console.WriteLine("Select operation:");
             Console.WriteLine();
 
-            foreach (MenuItem menuItem in this.menu) menuItem.Display();
+            foreach (var menuItem in menu) menuItem.Display();
 
             Console.WriteLine();
         }
@@ -142,11 +141,11 @@
         private void ShowStatus()
         {
             Console.Write("Logged in user: ");
-            this.Highlight(this.LoggedInUserDisplay);
+            Highlight(LoggedInUserDisplay);
             Console.WriteLine();
 
             Console.Write("       Balance: ");
-            this.Highlight(this.BalanceDisplay);
+            Highlight(BalanceDisplay);
             Console.WriteLine();
 
             Console.WriteLine();

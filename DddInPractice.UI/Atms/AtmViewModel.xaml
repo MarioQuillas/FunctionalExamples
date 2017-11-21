@@ -20,7 +20,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center"
+                <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Orientation="Horizontal"
+                            HorizontalAlignment="Center"
                             Margin="0 0 0 20">
                     <Label Content="Money inside:" FontSize="20" />
                     <Label Content="{Binding MoneyInside}" FontSize="20" FontWeight="Bold" />
@@ -56,8 +57,10 @@
 
             <StackPanel Orientation="Vertical" Margin="50 50 50 0">
                 <xctk:DecimalUpDown FormatString="C2" Value="0.01" Increment="0.01" Minimum="0.01" Maximum="5000"
-                                    x:Name="AmountToTake" Padding="10" FontSize="20" FontWeight="Bold" TextAlignment="Center" />
-                <Button FontSize="18" Content="Take money" Command="{Binding TakeMoneyCommand}" Padding="10" Margin="0 20 0 0"
+                                    x:Name="AmountToTake" Padding="10" FontSize="20" FontWeight="Bold"
+                                    TextAlignment="Center" />
+                <Button FontSize="18" Content="Take money" Command="{Binding TakeMoneyCommand}" Padding="10"
+                        Margin="0 20 0 0"
                         CommandParameter="{Binding ElementName=AmountToTake, Path=Value}" />
                 <Label Content="{Binding Message}" HorizontalAlignment="Center" FontSize="16" />
             </StackPanel>

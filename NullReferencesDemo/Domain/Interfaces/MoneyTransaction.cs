@@ -4,9 +4,9 @@
     {
         public MoneyTransaction(decimal amount)
         {
-            this.Amount = amount;
+            Amount = amount;
         }
 
-        public decimal Amount { get; private set; }
+        public decimal Amount { get; }
     }
 }

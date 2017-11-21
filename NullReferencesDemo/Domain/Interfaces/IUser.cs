@@ -1,7 +1,7 @@
-﻿namespace NullReferencesDemo.Domain.Interfaces
-{
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Domain.Interfaces
+{
     public interface IUser
     {
         decimal Balance { get; }

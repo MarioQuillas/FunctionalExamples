@@ -1,15 +1,11 @@
-﻿using static DddInPractice.Logic.SharedKernel.Money;
+﻿using System.Linq;
+using DddInPractice.Logic.Atms;
+using FluentAssertions;
+using Xunit;
+using static DddInPractice.Logic.SharedKernel.Money;
 
 namespace DddInPractice.Tests
 {
-    using System.Linq;
-
-    using DddInPractice.Logic.Atms;
-
-    using FluentAssertions;
-
-    using Xunit;
-
     public class AtmSpecs
     {
         [Fact]
@@ -49,7 +45,7 @@ namespace DddInPractice.Tests
         [Fact]
         public void Take_money_raises_an_event()
         {
-            Atm atm = new Atm();
+            var atm = new Atm();
             atm.LoadMoney(Dollar);
 
             atm.TakeMoney(1m);
@@ -62,8 +58,8 @@ namespace DddInPractice.Tests
     {
         public static void ShouldContainBalanceChangedEvent(this Atm atm, decimal delta)
         {
-            BalanceChangedEvent domainEvent =
-                (BalanceChangedEvent)atm.DomainEvents.SingleOrDefault(x => x.GetType() == typeof(BalanceChangedEvent));
+            var domainEvent =
+                (BalanceChangedEvent) atm.DomainEvents.SingleOrDefault(x => x.GetType() == typeof(BalanceChangedEvent));
 
             domainEvent.Should().NotBeNull();
             domainEvent.Delta.Should().Be(delta);

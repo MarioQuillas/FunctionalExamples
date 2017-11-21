@@ -1,14 +1,14 @@
-﻿namespace NullReferencesDemo.Presentation.PurchaseReports
-{
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Presentation.PurchaseReports
+{
     public class NotEnoughMoney : IPurchaseReport
     {
         public NotEnoughMoney(string username, string productName, decimal price)
         {
-            this.Username = username;
-            this.Price = price;
-            this.ProductName = productName;
+            Username = username;
+            Price = price;
+            ProductName = productName;
         }
 
         public decimal Price { get; }

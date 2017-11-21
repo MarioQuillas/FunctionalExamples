@@ -4,10 +4,10 @@
     {
         public CustomWindow(ViewModel viewModel)
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // Owner = Application.Current.MainWindow;
-            this.DataContext = viewModel;
+            DataContext = viewModel;
         }
     }
 }

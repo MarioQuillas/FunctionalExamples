@@ -1,7 +1,7 @@
-﻿namespace NullReferencesDemo.Presentation.Interfaces
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace NullReferencesDemo.Presentation.Interfaces
+{
     public interface IApplicationServices
     {
         bool IsUserLoggedIn { get; }

@@ -1,10 +1,9 @@
-﻿namespace NullReferencesDemo.Presentation.Implementation
+﻿using System;
+using NullReferencesDemo.Presentation.Implementation.Commands;
+using NullReferencesDemo.Presentation.Interfaces;
+
+namespace NullReferencesDemo.Presentation.Implementation
 {
-    using System;
-
-    using NullReferencesDemo.Presentation.Implementation.Commands;
-    using NullReferencesDemo.Presentation.Interfaces;
-
     internal class MenuItem
     {
         private readonly string caption;
@@ -17,8 +16,8 @@
         {
             this.caption = caption;
             this.hotkey = hotkey;
-            this.IsTerminalCommand = isTerminal;
-            this.Command = command;
+            IsTerminalCommand = isTerminal;
+            Command = command;
             this.isVisible = isVisible;
         }
 
@@ -38,25 +37,25 @@
 
         public void Display()
         {
-            if (!this.isVisible()) return;
+            if (!isVisible()) return;
 
-            int pos = this.caption.IndexOf(this.hotkey);
+            var pos = caption.IndexOf(hotkey);
 
-            if (pos > 0) Console.Write(this.caption.Substring(0, pos));
+            if (pos > 0) Console.Write(caption.Substring(0, pos));
 
-            ConsoleColor previousColor = Console.ForegroundColor;
+            var previousColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(this.hotkey);
+            Console.Write(hotkey);
             Console.ForegroundColor = previousColor;
 
-            if (pos < this.caption.Length - 1) Console.Write(this.caption.Substring(pos + 1));
+            if (pos < caption.Length - 1) Console.Write(caption.Substring(pos + 1));
 
             Console.WriteLine();
         }
 
         public bool MatchesKey(char key)
         {
-            return this.isVisible() && char.ToLower(this.hotkey) == char.ToLower(key);
+            return isVisible() && char.ToLower(hotkey) == char.ToLower(key);
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿namespace NullReferencesDemo.Presentation.Implementation.CommandResults
-{
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Presentation.Implementation.CommandResults
+{
     public class DepositResult : ICommandResult
     {
         public DepositResult(string username, decimal amount, decimal balance)
         {
-            this.Username = username ?? string.Empty;
-            this.Amount = amount;
-            this.Balance = balance;
+            Username = username ?? string.Empty;
+            Amount = amount;
+            Balance = balance;
         }
 
         public decimal Amount { get; }

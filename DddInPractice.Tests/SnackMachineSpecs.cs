@@ -1,17 +1,12 @@
-﻿using static DddInPractice.Logic.SharedKernel.Money;
+﻿using System;
+using DddInPractice.Logic.SnackMachines;
+using FluentAssertions;
+using Xunit;
+using static DddInPractice.Logic.SharedKernel.Money;
 using static DddInPractice.Logic.SnackMachines.Snack;
 
 namespace DddInPractice.Tests
 {
-    using System;
-
-    using DddInPractice.Logic.SharedKernel;
-    using DddInPractice.Logic.SnackMachines;
-
-    using FluentAssertions;
-
-    using Xunit;
-
     public class SnackMachineSpecs
     {
         [Fact]
@@ -58,7 +53,7 @@ namespace DddInPractice.Tests
         public void Cannot_insert_more_than_one_coin_or_note_at_a_time()
         {
             var snackMachine = new SnackMachine();
-            Money twoCent = Cent + Cent;
+            var twoCent = Cent + Cent;
 
             Action action = () => snackMachine.InsertMoney(twoCent);
 
@@ -112,7 +107,7 @@ namespace DddInPractice.Tests
         [Fact]
         public void Snack_machine_returns_money_with_highest_denomination_first()
         {
-            SnackMachine snackMachine = new SnackMachine();
+            var snackMachine = new SnackMachine();
             snackMachine.LoadMoney(Dollar);
 
             snackMachine.InsertMoney(Quarter);

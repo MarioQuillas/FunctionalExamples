@@ -4,12 +4,12 @@
     {
         public SnackMachineDto(long id, decimal moneyInside)
         {
-            this.Id = id;
-            this.MoneyInside = moneyInside;
+            Id = id;
+            MoneyInside = moneyInside;
         }
 
-        public long Id { get; private set; }
+        public long Id { get; }
 
-        public decimal MoneyInside { get; private set; }
+        public decimal MoneyInside { get; }
     }
 }

@@ -1,13 +1,13 @@
-﻿namespace NullReferencesDemo.Presentation.PurchaseReports
-{
-    using NullReferencesDemo.Presentation.Interfaces;
+﻿using NullReferencesDemo.Presentation.Interfaces;
 
+namespace NullReferencesDemo.Presentation.PurchaseReports
+{
     public class ProductNotFound : IPurchaseReport
     {
         public ProductNotFound(string username, string productName)
         {
-            this.Username = username;
-            this.ProductName = productName;
+            Username = username;
+            ProductName = productName;
         }
 
         public string ProductName { get; }
