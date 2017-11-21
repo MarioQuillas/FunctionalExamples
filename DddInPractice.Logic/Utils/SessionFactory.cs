@@ -26,25 +26,36 @@ namespace DddInPractice.Logic.Utils
 
         private static ISessionFactory BuildSessionFactory(string connectionString)
         {
-            var configuration = Fluently.Configure()
-                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(connectionString)).Mappings(
-                    m => m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()).Conventions.Add(
-                            ForeignKey.EndsWith("ID"),
-                            ConventionBuilder.Property.When(
-                                criteria => criteria.Expect(x => x.Nullable, Is.Not.Set),
-                                x => x.Not.Nullable())).Conventions.Add<TableNameConvention>().Conventions
-                        .Add<HiLoConvention>()).ExposeConfiguration(
-                    x =>
-                    {
-                        x.EventListeners.PostCommitUpdateEventListeners =
-                            new IPostUpdateEventListener[] {new EventListener()};
-                        x.EventListeners.PostCommitInsertEventListeners =
-                            new IPostInsertEventListener[] {new EventListener()};
-                        x.EventListeners.PostCommitDeleteEventListeners =
-                            new IPostDeleteEventListener[] {new EventListener()};
-                        x.EventListeners.PostCollectionUpdateEventListeners =
-                            new IPostCollectionUpdateEventListener[] {new EventListener()};
-                    });
+            var configuration =
+                Fluently
+                    .Configure()
+                    .Database(
+                        MsSqlConfiguration.MsSql2012.ConnectionString(connectionString))
+                    .Mappings(
+                        m =>
+                            m.FluentMappings
+                                .AddFromAssembly(Assembly.GetExecutingAssembly())
+                                .Conventions
+                                .Add(
+                                    ForeignKey.EndsWith("ID"),
+                                    ConventionBuilder.Property.When(
+                                        criteria => criteria.Expect(x => x.Nullable, Is.Not.Set),
+                                        x => x.Not.Nullable()))
+                                .Conventions.Add<TableNameConvention>()
+                                .Conventions
+                                .Add<HiLoConvention>())
+                    .ExposeConfiguration(
+                        x =>
+                        {
+                            x.EventListeners.PostCommitUpdateEventListeners =
+                                new IPostUpdateEventListener[] {new EventListener()};
+                            x.EventListeners.PostCommitInsertEventListeners =
+                                new IPostInsertEventListener[] {new EventListener()};
+                            x.EventListeners.PostCommitDeleteEventListeners =
+                                new IPostDeleteEventListener[] {new EventListener()};
+                            x.EventListeners.PostCollectionUpdateEventListeners =
+                                new IPostCollectionUpdateEventListener[] {new EventListener()};
+                        });
 
             return configuration.BuildSessionFactory();
         }
