@@ -73,7 +73,7 @@ namespace NullReferencesDemo.Presentation.Implementation
 
             var view = viewLocator.LocateServiceFor(result);
 
-            Render(view);
+            this.Render(view);
 
             Console.WriteLine();
             Console.Write("Press ENTER to continue...");
@@ -82,13 +82,14 @@ namespace NullReferencesDemo.Presentation.Implementation
 
         public bool ReadCommand()
         {
-            RefreshDisplay();
+            this.RefreshDisplay();
 
             var selectedMenuItem = SelectMenuItem();
 
             if (selectedMenuItem.IsTerminalCommand) return false;
 
             currentCommand = selectedMenuItem.Command;
+
             return true;
         }
 
